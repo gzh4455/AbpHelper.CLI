@@ -2,7 +2,9 @@
 using System.CommandLine.Parsing;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 using Volo.Abp;
 using CommandLineBuilder = EasyAbp.AbpHelper.Core.Commands.CommandLineBuilder;
@@ -34,7 +36,10 @@ namespace EasyAbp.AbpHelper
                     .AddAllRootCommands()
                     .UseDefaults()
                     .Build();
+                args = new string[] {"generate", "grpc", "Attachment","-d",@"E:\workspace\产品\科研全场景项目系统\abptest"};
+                args = new string[] {"generate", "controller", "Project","-d",@"E:\workspace\产品\科研全场景项目系统\abptest"};
 
+                Log.Logger.Information(JsonConvert.SerializeObject(args));
                 await parser.InvokeAsync(args);
             }
         }

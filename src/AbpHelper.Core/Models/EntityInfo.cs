@@ -22,6 +22,8 @@ namespace EasyAbp.AbpHelper.Core.Models
         public string NamespaceLastPart => Namespace.Split('.').Last();
         public string Name { get; }
         public string NamePluralized => Name.Pluralize();
+
+        public string NameCamel => Name.Substring(0, 1).ToLower() + Name.Substring(1, Name.Length - 1);
         public string? BaseType { get; }
         public string? PrimaryKey { get; }
         public List<PropertyInfo> Properties { get; } = new List<PropertyInfo>();

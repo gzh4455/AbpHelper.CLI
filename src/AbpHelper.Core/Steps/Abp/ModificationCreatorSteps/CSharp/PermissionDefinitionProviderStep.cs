@@ -25,14 +25,16 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp
             model.Bag.GroupName = groupName;
             string permissionDefinitionsText = TextGenerator.GenerateByTemplateName(templateDir, "Permissions_Definitions", model);
 
-            var builders = new List<ModificationBuilder<CSharpSyntaxNode>>();
+            var builders = new List<ModificationBuilder<CSharpSyntaxNode>>
+            {
+                new InsertionBuilder<CSharpSyntaxNode>(
+                    root => root.Descendants<MethodDeclarationSyntax>().First().GetEndLine(),
+                    permissionDefinitionsText,
+                    InsertPosition.Before,
+                    root => root.DescendantsNotContain<ClassDeclarationSyntax>(permissionDefinitionsText)
+                )
+            };
 
-            builders.Add(new InsertionBuilder<CSharpSyntaxNode>(
-                root => root.Descendants<MethodDeclarationSyntax>().First().GetEndLine(),
-                permissionDefinitionsText,
-                InsertPosition.Before,
-                root => root.DescendantsNotContain<ClassDeclarationSyntax>(permissionDefinitionsText)
-            ));
 
             if (projectInfo.TemplateType == TemplateType.Application)
             {

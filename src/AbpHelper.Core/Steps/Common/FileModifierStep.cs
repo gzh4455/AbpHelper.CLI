@@ -45,7 +45,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
 
             var newLine = await context.EvaluateAsync(NewLine, cancellationToken);
 
-            var lines = await File.ReadAllLinesAsync(targetFile);
+            var lines = await File.ReadAllLinesAsync(targetFile,cancellationToken);
             var errors = CheckModifications(modifications, lines).ToArray();
             if (errors.Length > 0)
             {
@@ -95,7 +95,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
                 NEXT_LINE: ;
             }
 
-            await File.WriteAllTextAsync(targetFile, newFile.ToString());
+            await File.WriteAllTextAsync(targetFile, newFile.ToString(),cancellationToken);
 
             return Done();
         }
