@@ -27,7 +27,7 @@ namespace EasyAbp.AbpHelper.Core.Commands.Generate.Crud
 
         protected override IActivityBuilder ConfigureBuild(CrudCommandOption option, IActivityBuilder activityBuilder)
         {
-            var entityFileName = option.Entity + ".cs";
+             var entityFileName = option.Entity + ".cs";
 
             return base.ConfigureBuild(option, activityBuilder)
                 .AddOverwriteWorkflow()

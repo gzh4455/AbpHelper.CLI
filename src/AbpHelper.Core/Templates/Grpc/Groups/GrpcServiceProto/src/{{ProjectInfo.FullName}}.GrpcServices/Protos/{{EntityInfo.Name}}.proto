@@ -1,0 +1,53 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "{{ProjectInfo.FullName}}.GrpcServices";
+
+package {{EntityInfo.Name}};
+
+message {{EntityInfo.Name}}ItemResponse{
+  {{~ for prop in EntityInfo.PorttobufProperties ~}}
+  {{ prop.Type }}  {{ prop.Name}} =  {{prop.SortId}};
+  {{~ end ~}}
+}
+
+message {{EntityInfo.Name}}CreateOrUpdateRequest{
+  {{~ for prop in EntityInfo.PorttobufProperties ~}}
+  {{ prop.Type }}  {{ prop.Name}} =  {{prop.SortId}};
+  {{~ end ~}}
+}
+
+message {{EntityInfo.Name}}BoolResponse{
+  bool Success = 1;
+  string ErrorMsg = 2;
+}
+
+
+message {{EntityInfo.Name}}IDRequest{
+  string Id = 1;
+}
+
+message {{EntityInfo.Name}}Response{
+  {{EntityInfo.Name}}ItemResponse Item = 1;
+}
+
+message {{EntityInfo.Name}}PageRequest{
+  int32 PageIndex = 1;
+  int32 PageSize = 2;
+  string SearchKey = 3;
+  string OrderBy = 4;
+}
+
+message {{EntityInfo.Name}}PageResponse{
+  repeated {{EntityInfo.Name}}ItemResponse Items = 1;
+  int32 TotalCount = 2;
+}
+
+service {{EntityInfo.Name}}{
+  rpc Get({{EntityInfo.Name}}IDRequest) returns ({{EntityInfo.Name}}Response){}
+  rpc PageAll({{EntityInfo.Name}}PageRequest) returns ({{EntityInfo.Name}}PageResponse){}
+  rpc CreateOrUpdate({{EntityInfo.Name}}CreateOrUpdateRequest) returns ({{EntityInfo.Name}}BoolResponse){}
+  rpc Delete({{EntityInfo.Name}}IDRequest) returns ({{EntityInfo.Name}}BoolResponse){}
+}
+    

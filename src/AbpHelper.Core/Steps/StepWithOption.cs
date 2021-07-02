@@ -69,7 +69,7 @@ namespace EasyAbp.AbpHelper.Core.Steps
                 GetExcludedDirectorySearchCacheKey(directory, excludedDirectories),
                 () => GetDirectoryFullPath(directory, excludedDirectories));
 
-            return SearchInDirectoryRecursive(directory, pattern, new HashSet<string>(excludedDirectories), Directory.EnumerateFiles);
+            return SearchInDirectoryRecursive(directory, pattern, new HashSet<string>(actualExcluded), Directory.EnumerateFiles);
         }
 
         private IEnumerable<string> SearchInDirectoryRecursive(string directory, string pattern, HashSet<string> actualExcluded, Func<string, string, SearchOption, IEnumerable<string>> searchFunc)
@@ -81,9 +81,13 @@ namespace EasyAbp.AbpHelper.Core.Steps
 
             foreach (var d in Directory.EnumerateDirectories(directory))
             {
+                if (d.Contains("Protos"))
+                {
+                    Console.WriteLine(d);
+                }
                 if (actualExcluded.Contains(d))
                 {
-                    actualExcluded.Remove(d);
+                    //actualExcluded.Remove(d);
                     continue;
                 }
 
@@ -106,7 +110,7 @@ namespace EasyAbp.AbpHelper.Core.Steps
             {
                 if (actualExcluded.Contains(d))
                 {
-                    actualExcluded.Remove(d);
+                    //actualExcluded.Remove(d);
                     continue;
                 }
 

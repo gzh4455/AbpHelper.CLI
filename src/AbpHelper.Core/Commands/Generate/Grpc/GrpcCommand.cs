@@ -40,6 +40,8 @@ namespace EasyAbp.AbpHelper.Core.Commands.Generate.Grpc
                 .Then<BuildDtoInfoStep>()
                 .Then<SetModelVariableStep>()
                 .AddBusinessServiceGeneration()
+                .AddGrpcProtobufFileGeneration()
+                .AddControllerGeneration()
                 ;
         }
     }

@@ -6,6 +6,7 @@ using Elsa.Expressions;
 using Elsa.Results;
 using Elsa.Scripting.JavaScript;
 using Elsa.Services.Models;
+using Microsoft.Extensions.Logging;
 
 namespace EasyAbp.AbpHelper.Core.Steps.Common
 {
@@ -45,6 +46,13 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
 
             var files = SearchFilesInDirectory(baseDirectory, searchFileName, excludeDirectories);
 
+            if (files.Count()>1) 
+            {
+                foreach (var item in files)
+                {
+                    Logger.LogDebug(item);
+                }
+            }
             var filePathName = files.SingleOrDefault();
 
             context.SetLastResult(filePathName);

@@ -34,6 +34,7 @@ namespace EasyAbp.AbpHelper.Core.Steps.Common
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
+                
                 Logger.LogInformation($"Directory {dir} created.");
             }
 
