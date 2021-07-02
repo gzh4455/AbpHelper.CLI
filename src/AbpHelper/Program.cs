@@ -36,8 +36,10 @@ namespace EasyAbp.AbpHelper
                     .AddAllRootCommands()
                     .UseDefaults()
                     .Build();
-                args = new string[] {"generate", "grpc", "Attachment","-d",@"E:\workspace\产品\科研全场景项目系统\abptest"};
-                args = new string[] {"generate", "controller", "Project","-d",@"E:\workspace\产品\科研全场景项目系统\abptest"};
+                //args = new string[] {"generate", "grpc", "Attachment","-d",@"E:\workspace\产品\科研全场景项目系统\abptest","--exclude",@"E:\workspace\产品\科研全场景项目系统\abptest\src\Clinbrain.SRCRM.XProject.GrpcServices\obj\Debug\net5.0\Protos"};
+                args = new string[] {"generate", "grpc", "Project","-d",@"E:\workspace\产品\科研全场景项目系统\abptest" ,"--exclude",@"**/Protos"};
+                // args = new string[] {"generate", "controller", "Project","-d",@"E:\workspace\产品\科研全场景项目系统\abptest"};
+                //args = new string[] {"generate", "controller", "Project","-d",@"D:\\360安全浏览器下载\\XProject"};
 
                 Log.Logger.Information(JsonConvert.SerializeObject(args));
                 await parser.InvokeAsync(args);

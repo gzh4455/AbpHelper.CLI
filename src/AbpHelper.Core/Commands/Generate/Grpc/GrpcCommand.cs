@@ -1,6 +1,7 @@
 ﻿using System;
 using EasyAbp.AbpHelper.Core.Steps;
 using EasyAbp.AbpHelper.Core.Steps.Abp;
+using EasyAbp.AbpHelper.Core.Steps.Abp.ModificationCreatorSteps.CSharp;
 using EasyAbp.AbpHelper.Core.Steps.Common;
 using EasyAbp.AbpHelper.Core.Workflow;
 using EasyAbp.AbpHelper.Core.Workflow.Generate;
@@ -8,6 +9,7 @@ using EasyAbp.AbpHelper.Core.Workflow.Generate.Crud;
 using EasyAbp.AbpHelper.Core.Workflow.Generate.Grpc;
 using Elsa.Activities;
 using Elsa.Expressions;
+using Elsa.Scripting.JavaScript;
 using Elsa.Services;
 
 namespace EasyAbp.AbpHelper.Core.Commands.Generate.Grpc
@@ -40,6 +42,24 @@ namespace EasyAbp.AbpHelper.Core.Commands.Generate.Grpc
                 .Then<BuildDtoInfoStep>()
                 .Then<SetModelVariableStep>()
                 .AddBusinessServiceGeneration()
+                .AddGrpcProtobufFileGeneration()
+                .AddControllerGeneration()
+                .Then<FileFinderStep>(
+                    step =>
+                    {
+                        step.BaseDirectory = new JavaScriptExpression<string>(@"`${AspNetCoreDir}/src`");
+                        step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}GrpcServicesAutoMapperProfile.cs`");
+                    })
+                .Then<GrpcServiceAutoMapperProfileStep>()
+                .Then<FileModifierStep>()
+                .Then<FileFinderStep>(
+                    step =>
+                    {
+                        step.BaseDirectory = new JavaScriptExpression<string>(@"`${AspNetCoreDir}/src`");
+                        step.SearchFileName = new JavaScriptExpression<string>("`${ProjectInfo.Name}WebAutoMapperProfile.cs`");
+                    })
+                .Then<GrpcWebAutoMapperProfileStep>()
+                .Then<FileModifierStep>()
                 ;
         }
     }

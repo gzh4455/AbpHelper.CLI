@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.DependencyInjection;
 
 namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
 {
-    public class {{EntityInfo.Name }}Service:I{{EntityInfo.Name}}Service
+    public class {{EntityInfo.Name }}Service:I{{EntityInfo.Name}}Service,ITransientDependency
     {
         private readonly IRepository<{{EntityInfo.Name }}> _{{EntityInfo.NameCamel}}Repository;
 
@@ -24,9 +25,9 @@ namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
             return await _{{EntityInfo.NameCamel}}Repository.UpdateAsync(entity);
         }
 
-        public async Task<{{EntityInfo.Name }}> GetByIdAsync(string id)
+        public async Task<{{EntityInfo.Name }}> GetByIdAsync(string id,bool includeDetail)
         {
-            return await _{{EntityInfo.NameCamel}}Repository.GetAsync(x=>x.Id==id);
+            return await _{{EntityInfo.NameCamel}}Repository.FindAsync(x=>x.Id==id,includeDetail);
         }
 
         public async  Task DeleteAsync({{EntityInfo.Name }} entity)
@@ -36,7 +37,8 @@ namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
 
         public async Task InsertAsync(IList<{{EntityInfo.Name }}> entities)
         {
-            await _{{EntityInfo.NameCamel}}Repository.InsertManyAsync(entities);
+            var db = await _{{EntityInfo.NameCamel}}Repository.GetDbContextAsync();
+            await db.BulkInsertAsync(typeof({{EntityInfo.Name }}), entities);
         }
 
         public Task<IQueryable<{{EntityInfo.Name }}>> GetQueryableAllAsync()
@@ -49,9 +51,22 @@ namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
             return _{{EntityInfo.NameCamel}}Repository.GetCountAsync();
         }
 
-        public Task<bool> Exist(string id)
+        public Task<bool> ExistAsync(string id)
         {
             return _{{EntityInfo.NameCamel}}Repository.AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> BulkInsertOrUpdateAsync(IList<{{EntityInfo.Name }}> entities)
+        {
+            var db= await _{{EntityInfo.NameCamel}}Repository.GetDbContextAsync();
+            await db.BulkMergeAsync(typeof({{EntityInfo.Name }}), entities);
+            return true;
+        }
+
+        public async Task MergeAsync(Project entity)
+        {
+            var db= await _{{EntityInfo.NameCamel}}Repository.GetDbContextAsync();
+            await db.SingleMergeAsync(entity);
         }
     }
     

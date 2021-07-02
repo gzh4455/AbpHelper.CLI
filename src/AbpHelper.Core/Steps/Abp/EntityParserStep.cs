@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EasyAbp.AbpHelper.Core.Extensions;
 using EasyAbp.AbpHelper.Core.Models;
+using EasyAbp.AbpHelper.Core.Protobufs;
 using EasyAbp.AbpHelper.Core.Steps.Common;
 using Elsa.Expressions;
 using Elsa.Results;
@@ -19,6 +20,12 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
 {
     public class EntityParserStep : Step
     {
+        private readonly ProtobufTypMapper _protobufTypMapper;
+
+        public EntityParserStep(ProtobufTypMapper  protobufTypMapper)
+        {
+            _protobufTypMapper = protobufTypMapper;
+        }
         public WorkflowExpression<string> EntityFile
         {
             get => GetState(() => new JavaScriptExpression<string>(FileFinderStep.DefaultFileParameterName));
@@ -83,8 +90,17 @@ namespace EasyAbp.AbpHelper.Core.Steps.Abp
                         .Select(prop => new PropertyInfo(prop.Type.ToString(), prop.Identifier.ToString()))
                         .ToList()
                     ;
+                
+                
                 var entityInfo = new EntityInfo(@namespace, className, baseType, primaryKey, relativeDirectory);
                 entityInfo.Properties.AddRange(properties);
+
+                entityInfo.PorttobufProperties.Add(new PropertyInfo("string","Id",1));
+                for (int i = 0; i < properties.Count; i++)
+                {
+                    entityInfo.PorttobufProperties.Add(new PropertyInfo(_protobufTypMapper.Map(properties[i].Type),properties[i].Name,i+2));
+                }
+                
                 if (keyNames != null)
                 {
                     entityInfo.CompositeKeyName = $"{className}Key";

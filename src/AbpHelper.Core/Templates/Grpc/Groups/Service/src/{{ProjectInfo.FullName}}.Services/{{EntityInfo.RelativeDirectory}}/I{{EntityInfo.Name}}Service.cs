@@ -10,7 +10,7 @@ namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
 
         Task<{{ EntityInfo.Name }}> UpdateAsync({{ EntityInfo.Name }} entity);
 
-        Task<{{ EntityInfo.Name }}> GetByIdAsync({{EntityInfo.PrimaryKey}} id);
+        Task<{{ EntityInfo.Name }}> GetByIdAsync({{EntityInfo.PrimaryKey}} id,bool includeDetail=false);
 
         Task InsertAsync(IList<{{ EntityInfo.Name }}> entities);
 
@@ -20,7 +20,10 @@ namespace {{ProjectInfo.FullName}}.{{EntityInfo.RelativeDirectory}}
 
         Task<long> GetCountAsync();
 
-        Task<bool> Exist({{EntityInfo.PrimaryKey}} id);
+        Task<bool> ExistAsync({{EntityInfo.PrimaryKey}} id);
+        Task<bool> BulkInsertOrUpdateAsync(IList<{{ EntityInfo.Name }}> entities);
+        
+        Task MergeAsync({{ EntityInfo.Name }} entity);
     }
     
 }

@@ -1,0 +1,8 @@
+            //Project
+            CreateMap<{{ EntityInfo.Name }}, {{EntityInfo.Name }}ItemResponse>();
+            CreateMap<{{ EntityInfo.Name }}ItemResponse,{{ EntityInfo.Name }}>();
+            
+            CreateMap<{{ EntityInfo.Name }}CreateOrUpdateRequest, {{ EntityInfo.Name }}>();
+            CreateMap<{{ EntityInfo.Name }}, {{EntityInfo.Name}}CreateOrUpdateRequest>();
+  
+ 

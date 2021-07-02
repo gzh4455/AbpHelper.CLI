@@ -32,6 +32,9 @@
 
   <ItemGroup>
     <Compile Remove="Templates\**\*.*" />
+    <Content Include="Templates\Grpc\Groups\GrpcServiceProto\src\{{ProjectInfo.FullName}}.GrpcServices\Services\{{EntityInfo.Name}}Service.cs" />
+    <Content Include="Templates\Grpc\Groups\Controller\src\{{ProjectInfo.FullName}}.HttpApi\{{EntityInfo.RelativeDirectory}}\Dtos\CreateOrUpdate{EntityInfo.Name}}.cs" />
+    <Content Include="Templates\Grpc\Groups\Controller\src\{{ProjectInfo.FullName}}.HttpApi\{{EntityInfo.RelativeDirectory}}\Dtos\{{EntityInfo.Name}}.cs" />
     <Content Remove="Templates\**\*.*" />
     <EmbeddedResource Include="Templates\**\*.*" />
   </ItemGroup>

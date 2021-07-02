@@ -1,0 +1,2 @@
+using {{ ProjectInfo.FullName }}.{{EntityInfo.RelativeDirectory}}.Dtos;
+using {{ ProjectInfo.FullName }}.GrpcServices;

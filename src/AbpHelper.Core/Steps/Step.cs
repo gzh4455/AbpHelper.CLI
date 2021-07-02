@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using EasyAbp.AbpHelper.Core.Protobufs;
 using Elsa.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -8,6 +9,7 @@ namespace EasyAbp.AbpHelper.Core.Steps
 {
     public abstract class Step : Activity
     {
+
         protected Step()
         {
             Logger = NullLogger<Step>.Instance;

@@ -29,5 +29,8 @@ namespace EasyAbp.AbpHelper.Core.Models
         public List<PropertyInfo> Properties { get; } = new List<PropertyInfo>();
         public string? CompositeKeyName { get; set; }
         public List<PropertyInfo> CompositeKeys { get; } = new List<PropertyInfo>();
+
+
+        public List<PropertyInfo> PorttobufProperties { get; } = new List<PropertyInfo>();
     }
 }
