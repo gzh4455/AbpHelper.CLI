@@ -30,6 +30,7 @@ namespace EasyAbp.AbpHelper.Core.Protobufs
             _mapping.TryAdd("long?", "google.protobuf.Int64Value");
             _mapping.TryAdd("uint?", "google.protobuf.UInt32Value");
             _mapping.TryAdd("ulong?", "google.protobuf.UInt64Value");
+            _mapping.TryAdd("ulong?", "google.protobuf.UInt64Value");
         }
 
         public string Map(string type)
